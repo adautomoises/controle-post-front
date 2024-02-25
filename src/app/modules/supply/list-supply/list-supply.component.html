@@ -1,0 +1,24 @@
+<h1>Lista de Abastecimentos</h1>
+<section class="rounded">
+  <p-table [value]="supplies" [rows]="8" styleClass="p-datatable-gridlines p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Tanque</th>
+        <th>Bomba</th>
+        <th>Litros</th>
+        <th>Valor</th>
+        <th>Data</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-supply>
+      <tr>
+        <td>{{ supply.tanque.combustivel.tipo }}</td>
+        <td>{{ supply.tanque.bomba }}</td>
+        <td>{{ supply.litros.toFixed(2) }}</td>
+        <td>R$ {{ supply.valor.toFixed(2) }}</td>
+        <td>{{ supply.data }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total"></p-paginator>
+</section>

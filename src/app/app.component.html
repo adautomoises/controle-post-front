@@ -1,8 +1,18 @@
-<div class="w-screen h-screen flex flex-col justify-center items-center">
-  <h1 class="text-3xl font-bold underline text-red-500" pTooltip="PrimeNG + Tailwind" tooltipPosition="top">
-    PrimeNG + Tailwind
-  </h1>
-
-  <p-button label="Submit" (click)="show()"></p-button>
-</div>
+<section class="flex">
+  <aside>
+    <nav>
+      <ul class="m-0 p-0">
+        <li class="list-none">
+          <a [routerLink]="['supply','list']">Abastecimentos</a>
+        </li>
+        <li class="list-none">
+          <a [routerLink]="['supply','create']">Abastecer</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="w-full p-8 h-screen bg-slate-50">
+    <router-outlet></router-outlet>
+  </div>
+</section>
 <p-toast></p-toast>

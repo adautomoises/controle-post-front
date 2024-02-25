@@ -5,10 +5,10 @@ import { Toast } from './global/toast';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'ControleAbastecimentoFront';
+  title = 'Posto ABCD';
   constructor(private primengConfig: PrimeNGConfig, private toast: Toast) {}
 
   ngOnInit(): void {
@@ -37,9 +37,5 @@ export class AppComponent implements OnInit {
         FilterMatchMode.DATE_AFTER,
       ],
     };
-  }
-
-  show() {
-    this.toast.showToast('success', 'toast', 'implementado com sucesso');
   }
 }
