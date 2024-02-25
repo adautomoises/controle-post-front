@@ -2,6 +2,7 @@ import { SupplyService } from './../services/supply.service';
 import { Component, OnInit } from '@angular/core';
 import { SupplyResponse, TipoCombustivel } from '../interfaces/supply';
 import { PaginatorState } from 'primeng/paginator';
+import { formatDateToPTBR } from 'src/app/global/utils/format-date';
 
 @Component({
   selector: 'app-list-supply',
@@ -58,6 +59,10 @@ export class ListSupplyComponent implements OnInit {
         data: '2024-02-22',
       },
     ];
+
+    this.supplies.map(
+      (supply) => (supply.data = formatDateToPTBR(supply.data))
+    );
   }
 
   onPageChange(event: PaginatorState) {

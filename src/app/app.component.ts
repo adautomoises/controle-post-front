@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
-import { Toast } from './global/toast';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,7 @@ import { Toast } from './global/toast';
 })
 export class AppComponent implements OnInit {
   title = 'Posto ABCD';
-  constructor(private primengConfig: PrimeNGConfig, private toast: Toast) {}
+  constructor(private primengConfig: PrimeNGConfig) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;

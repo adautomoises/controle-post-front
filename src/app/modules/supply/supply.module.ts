@@ -14,9 +14,10 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChartModule } from 'primeng/chart';
 import { PaginatorModule } from 'primeng/paginator';
+import { SupplyComponent } from './supply.component';
 
 @NgModule({
-  declarations: [ListSupplyComponent, CreateSupplyComponent],
+  declarations: [SupplyComponent, ListSupplyComponent, CreateSupplyComponent],
   imports: [
     CommonModule,
     SupplyRoutingModule,
