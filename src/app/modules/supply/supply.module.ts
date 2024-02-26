@@ -15,6 +15,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ChartModule } from 'primeng/chart';
 import { PaginatorModule } from 'primeng/paginator';
 import { SupplyComponent } from './supply.component';
+import { DividerModule } from 'primeng/divider';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [SupplyComponent, ListSupplyComponent, CreateSupplyComponent],
@@ -30,6 +32,8 @@ import { SupplyComponent } from './supply.component';
     DropdownModule,
     ChartModule,
     PaginatorModule,
+    DividerModule,
+    TooltipModule,
   ],
   providers: [],
   bootstrap: [],

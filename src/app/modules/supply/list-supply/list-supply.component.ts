@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { SupplyResponse, TipoCombustivel } from '../interfaces/supply';
 import { PaginatorState } from 'primeng/paginator';
 import { formatDateToPTBR } from 'src/app/global/utils/format-date';
+import { Toast } from 'src/app/global/toast';
+import { ReportService } from '../services/report.service';
 
 @Component({
   selector: 'app-list-supply',
@@ -16,7 +18,11 @@ export class ListSupplyComponent implements OnInit {
   rows: number = 0;
   total: number = 0;
 
-  constructor(private SupplyService: SupplyService) {}
+  constructor(
+    private SupplyService: SupplyService,
+    private toast: Toast,
+    private reportService: ReportService
+  ) {}
 
   ngOnInit(): void {
     this.getSupplies();
@@ -71,5 +77,17 @@ export class ListSupplyComponent implements OnInit {
     // this.SupplyService.getSupplies(event).subscribe(
     //   (response) => (this.supplies = response)
     // );
+  }
+
+  export() {
+    this.reportService.exportReport().subscribe({
+      next: () => {
+        this.toast.showToast(
+          'success',
+          'Relatório',
+          'O relatório foi exportado'
+        );
+      },
+    });
   }
 }

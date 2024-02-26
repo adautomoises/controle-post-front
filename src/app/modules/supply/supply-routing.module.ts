@@ -5,13 +5,13 @@ import { CreateSupplyComponent } from './create-supply/create-supply.component';
 import { SupplyComponent } from './supply.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'supply', pathMatch: 'full' },
+  { path: '', redirectTo: 'supply/list', pathMatch: 'full' },
   {
     path: 'supply',
     component: SupplyComponent,
     children: [
       {
-        path: '',
+        path: 'list',
         component: ListSupplyComponent,
       },
       {

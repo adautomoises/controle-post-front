@@ -1,5 +1,8 @@
-<h1>Lista de Abastecimentos</h1>
-<section class="rounded">
+<section class="flex flex-col gap-4 rounded bg-white p-4 shadow-md">
+  <header class="w-full flex justify-between items-center">
+    <h1>Lista de Abastecimentos</h1>
+    <p-button label="Exportar" icon="pi pi-file-export" [outlined]="true" (click)="export()"></p-button>
+  </header>
   <p-table [value]="supplies" [rows]="8" styleClass="p-datatable-gridlines p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
