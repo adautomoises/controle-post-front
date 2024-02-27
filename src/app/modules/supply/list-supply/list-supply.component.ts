@@ -29,46 +29,14 @@ export class ListSupplyComponent implements OnInit {
   }
 
   getSupplies() {
-    // this.SupplyService.getSupplies().subscribe(
-    //   (response) => (this.supplies = response)
-    // );
+    this.SupplyService.getSupplies().subscribe((response) => {
+      response.map((supply) => {
+        supply.data = formatDateToPTBR(supply.data);
+        return supply;
+      });
 
-    this.supplies = [
-      {
-        id: 1,
-        tanque: {
-          id: 1,
-          combustivel: {
-            id: 1,
-            tipo: TipoCombustivel.GASOLINA,
-            valor: 5.5,
-          },
-          bomba: 1,
-        },
-        litros: 18.0,
-        valor: 100,
-        data: '2024-02-22',
-      },
-      {
-        id: 2,
-        tanque: {
-          id: 2,
-          combustivel: {
-            id: 2,
-            tipo: TipoCombustivel.DIESEL,
-            valor: 2.6,
-          },
-          bomba: 3,
-        },
-        litros: 9.0,
-        valor: 50,
-        data: '2024-02-22',
-      },
-    ];
-
-    this.supplies.map(
-      (supply) => (supply.data = formatDateToPTBR(supply.data))
-    );
+      this.supplies = response;
+    });
   }
 
   onPageChange(event: PaginatorState) {

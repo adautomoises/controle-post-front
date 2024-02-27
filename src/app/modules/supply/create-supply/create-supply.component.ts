@@ -1,7 +1,9 @@
+import { Frentista, Tanque } from './../interfaces/supply';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SupplyService } from '../services/supply.service';
-import { Frentista, Tanque } from '../interfaces/supply';
+import { Toast } from 'src/app/global/toast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-supply',
@@ -21,12 +23,14 @@ export class CreateSupplyComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private supplyService: SupplyService
+    private supplyService: SupplyService,
+    private toast: Toast,
+    private router: Router
   ) {
     this.formModel = this.formBuilder.group({
       frentista: [null, Validators.required],
       tanque: [null, Validators.required],
-      bomba: [null, Validators.required],
+      bomba_id: [null, Validators.required],
       valor: [null, Validators.required],
       data: [null, Validators.required],
     });
@@ -115,7 +119,18 @@ export class CreateSupplyComponent implements OnInit {
 
   submit() {
     if (this.formModel.valid) {
-      this.supplyService.postSupply(this.formModel.value).subscribe();
+      this.formModel.get('frentista')?.disable();
+      this.formModel.get('tanque')?.disable();
+      this.supplyService.postSupply(this.formModel.value).subscribe({
+        next: () => {
+          this.router.navigate(['/list']);
+          this.toast.showToast(
+            'success',
+            'Abastecimento',
+            'Um abastecimento foi realizado'
+          );
+        },
+      });
     }
   }
 }

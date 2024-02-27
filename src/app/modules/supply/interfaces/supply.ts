@@ -1,14 +1,18 @@
 export interface SupplyResponse {
   id: number;
-  tanque: {
+  bomba: {
     id: number;
-    combustivel: {
+    tanque: {
       id: number;
-      tipo: TipoCombustivel;
-      valor: number;
+      capacidade: number;
+      combustivel: {
+        id: number;
+        tipo: TipoCombustivel;
+        valor: number;
+      };
     };
-    bomba: number;
   };
+  imposto: number;
   litros: number;
   valor: number;
   data: string;
