@@ -1,9 +1,13 @@
-import { Frentista, Tanque } from './../interfaces/supply';
+import { PumpService } from './../services/pump.service';
+import { Frentista } from './../interfaces/supply';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SupplyService } from '../services/supply.service';
 import { Toast } from 'src/app/global/toast';
 import { Router } from '@angular/router';
+import { TankResponse } from '../interfaces/tank';
+import { TankService } from '../services/tank.service';
+import { PumpResponse } from '../interfaces/pump';
 
 @Component({
   selector: 'app-create-supply',
@@ -12,20 +16,23 @@ import { Router } from '@angular/router';
 })
 export class CreateSupplyComponent implements OnInit {
   formModel: FormGroup;
-  tanques: Tanque[] = [];
-  bombas: number[] = [];
-  frentistas: Frentista[] = [];
-  valorMax: number[] = [];
-  tanqueSelecionado = 0;
+  public tanques: TankResponse[] = [];
+  public bombas: PumpResponse[] = [];
+  public bombasOptions: number[] = [];
+  public frentistas: Frentista[] = [];
+  public valorMax: number[] = [];
+  public tanqueSelecionado = 0;
 
-  data: any;
-  options: any;
+  public data: any;
+  public options: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private supplyService: SupplyService,
     private toast: Toast,
-    private router: Router
+    private router: Router,
+    private tankService: TankService,
+    private pumpService: PumpService
   ) {
     this.formModel = this.formBuilder.group({
       frentista: [null, Validators.required],
@@ -37,24 +44,8 @@ export class CreateSupplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tanques = [
-      {
-        id: 1,
-        combustivel: {
-          tipo: 'Gasolina',
-          valor: 5.5,
-        },
-        capacidade: 1000,
-      },
-      {
-        id: 2,
-        combustivel: {
-          tipo: 'Diesel',
-          valor: 2.5,
-        },
-        capacidade: 2000,
-      },
-    ];
+    this.listarTanques();
+    this.listarBombas();
 
     this.frentistas = [
       { name: 'Adauto', codigo: 1 },
@@ -64,57 +55,15 @@ export class CreateSupplyComponent implements OnInit {
       { name: 'Daniel', codigo: 5 },
       { name: 'Cláudio', codigo: 6 },
     ];
-
-    this.valorMax = this.tanques.map(
-      (tanque) => tanque.capacidade * tanque.combustivel.valor
-    );
-
-    const documentStyle = getComputedStyle(document.documentElement);
-
-    this.data = {
-      labels: ['Gasolina', 'Diesel'],
-      datasets: [
-        {
-          data: [this.tanques[0].capacidade, this.tanques[1].capacidade],
-          backgroundColor: [
-            documentStyle.getPropertyValue('--blue-500'),
-            documentStyle.getPropertyValue('--yellow-500'),
-            documentStyle.getPropertyValue('--green-500'),
-          ],
-          hoverBackgroundColor: [
-            documentStyle.getPropertyValue('--blue-400'),
-            documentStyle.getPropertyValue('--yellow-400'),
-            documentStyle.getPropertyValue('--green-400'),
-          ],
-        },
-      ],
-    };
-
-    this.options = {
-      cutout: '60%',
-      plugins: {
-        legend: {
-          labels: {
-            color: '#000',
-          },
-        },
-      },
-    };
   }
 
   toggleTanque() {
-    this.formModel.get('bomba')?.reset();
+    this.formModel.get('bomba_id')?.reset();
     this.formModel.get('valor')?.reset();
-    switch (this.formModel.value.tanque) {
-      case 1:
-        this.tanqueSelecionado = 0;
-        return (this.bombas = [1, 2]);
-      case 2:
-        this.tanqueSelecionado = 1;
-        return (this.bombas = [3, 4]);
-      default:
-        return (this.bombas = []);
-    }
+
+    this.bombasOptions = this.bombas
+      .filter((bomba) => bomba.tanque.id === this.formModel.value.tanque)
+      .map((bomba) => bomba.id);
   }
 
   submit() {
@@ -132,5 +81,53 @@ export class CreateSupplyComponent implements OnInit {
         },
       });
     }
+  }
+
+  listarTanques() {
+    this.tankService.getTanks().subscribe((response) => {
+      this.tanques = response;
+      this.valorMax = this.tanques.map(
+        (tanque) => tanque.capacidade * tanque.combustivel.valor
+      );
+      const documentStyle = getComputedStyle(document.documentElement);
+
+      this.data = {
+        labels: this.tanques.map((tank) => {
+          return tank.combustivel.tipo;
+        }),
+        datasets: [
+          {
+            data: this.tanques.map((tank) => tank.capacidade),
+            backgroundColor: [
+              documentStyle.getPropertyValue('--blue-500'),
+              documentStyle.getPropertyValue('--yellow-500'),
+              documentStyle.getPropertyValue('--green-500'),
+            ],
+            hoverBackgroundColor: [
+              documentStyle.getPropertyValue('--blue-400'),
+              documentStyle.getPropertyValue('--yellow-400'),
+              documentStyle.getPropertyValue('--green-400'),
+            ],
+          },
+        ],
+      };
+
+      this.options = {
+        cutout: '60%',
+        plugins: {
+          legend: {
+            labels: {
+              color: '#000',
+            },
+          },
+        },
+      };
+    });
+  }
+
+  listarBombas() {
+    this.pumpService.getPumps().subscribe((response) => {
+      this.bombas = response;
+    });
   }
 }
