@@ -43,7 +43,7 @@ export class LoginComponent {
     if (this.formModel.valid) {
       this.loginService.login(this.formModel.value).subscribe((response) => {
         localStorage.setItem('token', response.token);
-        this.router.navigate(['/supply']);
+        this.router.navigate(['/supply/list']);
         this.toast.showToast(
           'success',
           'Usuário autorizado',

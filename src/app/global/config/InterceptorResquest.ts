@@ -13,6 +13,10 @@ export class InterceptorRequest implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
+    if (token === null) {
+      return next.handle(req);
+    }
+
     req = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
     });

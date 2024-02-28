@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./modules/supply/supply.module').then((m) => m.SupplyModule),
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '' },
