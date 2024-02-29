@@ -21,8 +21,7 @@ export class CreateSupplyComponent implements OnInit {
   public bombas: PumpResponse[] = [];
   public bombasOptions: number[] = [];
   public frentistas: UserResponse[] = [];
-  public valorMax: number[] = [];
-  public tanqueSelecionado = 0;
+  public valorMax: number = 0;
 
   public data: any;
   public options: any;
@@ -55,6 +54,11 @@ export class CreateSupplyComponent implements OnInit {
     this.formModel.get('bomba_id')?.reset();
     this.formModel.get('valor')?.reset();
 
+    let tanque = this.tanques.find(
+      (tanque) => tanque.id === this.formModel.value.tanque
+    );
+    this.valorMax = tanque!.capacidade * tanque!.combustivel.valor;
+
     this.bombasOptions = this.bombas
       .filter((bomba) => bomba.tanque.id === this.formModel.value.tanque)
       .map((bomba) => bomba.id);
@@ -86,9 +90,7 @@ export class CreateSupplyComponent implements OnInit {
   listarTanques() {
     this.tankService.getTanks().subscribe((response) => {
       this.tanques = response;
-      this.valorMax = this.tanques.map(
-        (tanque) => tanque.capacidade * tanque.combustivel.valor
-      );
+
       const documentStyle = getComputedStyle(document.documentElement);
 
       this.data = {
