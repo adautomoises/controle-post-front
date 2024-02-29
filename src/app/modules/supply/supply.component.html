@@ -1,0 +1,27 @@
+<section class="flex">
+  <div class=" w-[15rem] flex flex-col items-start">
+    <header class="w-full flex justify-between items-center p-4">
+      <div class="flex items-center gap-2">
+        <img src="../../../favicon.ico" alt="Logo do Posto ABCD">
+        <span class="font-bold">ABCD</span>
+      </div>
+
+      <span (click)="lougout()" class="material-symbols-outlined cursor-pointer rounded-full p-2 hover:bg-slate-300"
+        pTooltip="Sair">logout</span>
+    </header>
+    <p-divider class="w-full"></p-divider>
+    <nav class="w-full p-4 flex flex-col gap-4">
+      <ul class="flex flex-col gap-2 p-0 m-0" *ngFor="let menu of menuItems">
+        <span class="font-bold">{{menu.categoria}}</span>
+        <li *ngFor="let item of menu.items" routerLinkActive="bg-slate-200 text-blue-700" [routerLink]="item.rota"
+          class="flex items-center rounded gap-2 p-2 list-none cursor-pointer hover:bg-slate-300">
+          <span class="material-symbols-outlined">{{item.icone}}</span>
+          <a routerLinkActive="text-blue-700" class="text-gray-700 font-medium no-underline">{{item.nome}}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="w-full p-8 h-screen bg-slate-50">
+    <router-outlet></router-outlet>
+  </div>
+</section>

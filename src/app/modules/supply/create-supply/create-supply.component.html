@@ -1,0 +1,64 @@
+<section class="p-4 rounded bg-white shadow-md w-fit">
+  <h1>Cadastrar abastecimento</h1>
+  <form (ngSubmit)="submit()" [formGroup]="formModel" #formDir="ngForm"
+    class="flex flex-col gap-4 rounded bg-white max-w-fit">
+    <h4 class="text-gray-700">Dados do Frentista</h4>
+    <section>
+      <div class="form-group w-1/2">
+        <span class="p-float-label">
+          <p-dropdown inputId="frentista" formControlName="frentista" [options]="frentistas" optionLabel="login"
+            optionValue="id" emptyMessage="Não há frentista disponível"
+            placeholder="Selecione o frentista"></p-dropdown>
+          <label for="frentista">Frentista</label>
+        </span>
+      </div>
+    </section>
+    <section class="w-full">
+      <h5 class="text-gray-700">Capacidade dos tanques (em litros)</h5>
+      <p-chart width="150" type="doughnut" [data]="data" [options]="options"></p-chart>
+    </section>
+    <h4 class="text-gray-700">Informações do abastecimento</h4>
+    <section class="flex flex-col gap-8">
+      <div class="flex gap-4">
+        <div class="form-group w-full">
+          <span class="p-float-label">
+            <p-dropdown inputId="tanque" formControlName="tanque" [options]="tanques" optionLabel="combustivel.tipo"
+              optionValue="id" (onChange)="toggleTanque()" placeholder="Selecione o tanque"
+              emptyMessage="Não há tanque disponível"></p-dropdown>
+            <label for="tanque">Tanque</label>
+          </span>
+        </div>
+        <div class="form-group w-full">
+          <span class="p-float-label">
+            <p-dropdown inputId="bomba" formControlName="bomba_id" [options]="bombasOptions"
+              emptyMessage="Não há bomba disponível" placeholder="Selecione a bomba" class="w-full"></p-dropdown>
+            <label for="bomba">Bomba</label>
+          </span>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="form-group">
+          <span class="p-float-label">
+            <p-inputNumber inputId="valor" formControlName="valor" mode="currency" currency="BRL" locale="pt-BR"
+              placeholder="R$ 9.999,99" [max]="valorMax[tanqueSelecionado]">
+            </p-inputNumber>
+            <label for="valor">Valor (Max: {{valorMax[tanqueSelecionado]}})</label>
+          </span>
+        </div>
+        <div class="form-group">
+          <span class="p-float-label">
+            <p-calendar inputId="data" formControlName="data" dateFormat="dd/mm/yy" placeholder="dd/mm/yy"></p-calendar>
+            <label for="data">Data</label>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <p-button type="submit">
+      <ng-template pTemplate="buttonicon">
+        <span class="material-symbols-outlined">add</span>
+        <span>Abastecer</span>
+      </ng-template>
+    </p-button>
+  </form>
+</section>
