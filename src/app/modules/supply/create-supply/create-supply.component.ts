@@ -1,5 +1,5 @@
+import { UserService } from './../services/user.service';
 import { PumpService } from './../services/pump.service';
-import { Frentista } from './../interfaces/supply';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SupplyService } from '../services/supply.service';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { TankResponse } from '../interfaces/tank';
 import { TankService } from '../services/tank.service';
 import { PumpResponse } from '../interfaces/pump';
+import { UserResponse } from '../interfaces/user';
 
 @Component({
   selector: 'app-create-supply',
@@ -19,7 +20,7 @@ export class CreateSupplyComponent implements OnInit {
   public tanques: TankResponse[] = [];
   public bombas: PumpResponse[] = [];
   public bombasOptions: number[] = [];
-  public frentistas: Frentista[] = [];
+  public frentistas: UserResponse[] = [];
   public valorMax: number[] = [];
   public tanqueSelecionado = 0;
 
@@ -32,7 +33,8 @@ export class CreateSupplyComponent implements OnInit {
     private toast: Toast,
     private router: Router,
     private tankService: TankService,
-    private pumpService: PumpService
+    private pumpService: PumpService,
+    private userService: UserService
   ) {
     this.formModel = this.formBuilder.group({
       frentista: [null, Validators.required],
@@ -46,15 +48,7 @@ export class CreateSupplyComponent implements OnInit {
   ngOnInit(): void {
     this.listarTanques();
     this.listarBombas();
-
-    this.frentistas = [
-      { name: 'Adauto', codigo: 1 },
-      { name: 'Agatha', codigo: 2 },
-      { name: 'Guilherme', codigo: 3 },
-      { name: 'Rafael', codigo: 4 },
-      { name: 'Daniel', codigo: 5 },
-      { name: 'Cláudio', codigo: 6 },
-    ];
+    this.listarFrentistas();
   }
 
   toggleTanque() {
@@ -81,6 +75,12 @@ export class CreateSupplyComponent implements OnInit {
         },
       });
     }
+  }
+
+  listarFrentistas() {
+    this.userService
+      .listarFrentistas()
+      .subscribe((response) => (this.frentistas = response));
   }
 
   listarTanques() {

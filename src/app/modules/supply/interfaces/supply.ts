@@ -17,8 +17,3 @@ export enum TipoCombustivel {
   GASOLINA = 'Gasolina',
   DIESEL = 'Diesel',
 }
-
-export interface Frentista {
-  name: string;
-  codigo: number;
-}
