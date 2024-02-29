@@ -35,6 +35,16 @@ export class SupplyComponent {
         },
       ],
     },
+    {
+      categoria: 'Gestão',
+      items: [
+        {
+          rota: ['/management'],
+          nome: 'Funcionários',
+          icone: 'badge',
+        },
+      ],
+    },
   ];
 
   constructor(private router: Router, private toast: Toast) {}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListSupplyComponent } from './list-supply/list-supply.component';
 import { CreateSupplyComponent } from './create-supply/create-supply.component';
 import { SupplyComponent } from './supply.component';
+import { ManagementComponent } from '../management/management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'supply/list', pathMatch: 'full' },
@@ -17,6 +18,16 @@ const routes: Routes = [
       {
         path: 'create',
         component: CreateSupplyComponent,
+      },
+    ],
+  },
+  {
+    path: 'management',
+    component: SupplyComponent,
+    children: [
+      {
+        path: '',
+        component: ManagementComponent,
       },
     ],
   },
