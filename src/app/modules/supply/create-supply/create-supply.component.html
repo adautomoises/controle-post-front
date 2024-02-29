@@ -40,9 +40,9 @@
         <div class="form-group">
           <span class="p-float-label">
             <p-inputNumber inputId="valor" formControlName="valor" mode="currency" currency="BRL" locale="pt-BR"
-              placeholder="R$ 9.999,99" [max]="valorMax[tanqueSelecionado]">
+              placeholder="R$ 9.999,99" [max]="valorMax" [min]="0">
             </p-inputNumber>
-            <label for="valor">Valor (Max: {{valorMax[tanqueSelecionado]}})</label>
+            <label for="valor">Valor (Max: {{valorMax}})</label>
           </span>
         </div>
         <div class="form-group">
@@ -54,7 +54,7 @@
       </div>
     </section>
 
-    <p-button type="submit">
+    <p-button type="submit" [disabled]="valorMax === 0">
       <ng-template pTemplate="buttonicon">
         <span class="material-symbols-outlined">add</span>
         <span>Abastecer</span>
